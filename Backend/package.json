@@ -4,13 +4,14 @@
   "description": "Mergepad is an all-in-one collaboration platform that integrates WhatsApp messaging, Google Meet video conferencing, real-time document editing (similar to Google Docs/Canva), and video recording features.",
   "main": "src/server.js",
   "scripts": {
-    "dev" : "nodemon src/server.js",
+    "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "type": "module",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -21,7 +22,7 @@
     "stream-chat": "^8.60.0"
   },
   "devDependencies": {
-    "nodemon":"^3.1.9"
+    "nodemon": "^3.1.9"
   },
   "license": "ISC"
 }
