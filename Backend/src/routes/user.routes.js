@@ -6,7 +6,7 @@ import {
 import { protectedRoute } from "../middleware/auth.middleware.js";
 const router = express();
 
-router.use(protectedRoutez);
+router.use(protectedRoute);
 
 router.get("/", getRecommendedUsers);
 router.get("/friends", getMyFriends);
