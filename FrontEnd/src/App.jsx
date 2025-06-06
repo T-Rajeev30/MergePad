@@ -3,7 +3,9 @@ import { useState } from "react";
 function App() {
   return (
     <>
-      <h1>Welcome to Merge-Pad</h1>
+      <div className="bg-amber-300">
+        <h1 className="text-4xl">Welcome to Merge-Pad</h1>
+      </div>
     </>
   );
 }

@@ -1,13 +1,13 @@
 # MergePad
 
-MergePad is a simple and efficient text merging tool designed to help you combine and compare files with ease.
+MergePad is a powerful and user-friendly text merging tool that allows you to efficiently combine and compare files.
 
 ## Features
 
-- Merge multiple text files
-- Highlight differences between files
-- Simple and intuitive interface
-- Cross-platform support
+- Merge multiple text files seamlessly
+- Highlight and review differences between files
+- Clean and intuitive user interface
+- RESTful backend API for merging and comparing files
 
 ## Getting Started
 
@@ -15,18 +15,20 @@ MergePad is a simple and efficient text merging tool designed to help you combin
     ```bash
     git clone https://github.com/yourusername/MergePad.git
     ```
-2. Open the project in your preferred editor.
-3. Follow the instructions in the `INSTALL.md` to set up dependencies.
+2. Open the project in your preferred code editor.
+3. Follow the setup instructions in `INSTALL.md` to install dependencies.
 
 ## Usage
 
-- Launch MergePad.
-- Select files to merge or compare.
-- Review and save the merged output.
+- Start MergePad.
+- Select the files you want to merge or compare.
+- View highlighted differences and merge results.
+- Save the merged output.
+- For backend/API usage, see `docs/API.md`.
 
 ## Contributing
 
-Contributions are welcome! Please open issues or submit pull requests.
+We welcome contributions! Please open an issue or submit a pull request.
 
 ## License
 
