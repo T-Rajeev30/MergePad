@@ -1,14 +1,30 @@
+import { Route, Routes } from "react-router";
+import Homepage from "./Pages/Homepage.jsx";
+import LoginPage from "./Pages/LoginPage";
+import Signup from "./Pages/Signup";
+import NotificationPage from "./Pages/NotificationPage";
+import CallPage from "./Pages/CallPage";
+import ChatPage from "./Pages/ChatPage";
+import OnboardingPage from "./Pages/OnboardingPage.jsx";
+import toast, { Toaster } from "react-hot-toast";
+
 function App() {
   return (
     <>
-      <div className="bg-red-800 h-screen w-full">
-        <button className="btn">Button</button>
-        <button className="btn btn-neutral">Neutral</button>
-        <button className="btn btn-primary">Primary</button>
-        <button className="btn btn-secondary">Secondary</button>
-        <button className="btn btn-accent">Accent</button>
-        <button className="btn btn-ghost">Ghost</button>
-        <button className="btn btn-link">Link</button>
+      <div className=" h-screen w-full" data-theme="coffee">
+        <button onClick={() => toast.success("Hello WOrld")}>
+          Click a toast
+        </button>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/notification" element={<NotificationPage />} />
+          <Route path="/call" element={<CallPage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/onboarding" element={<OnboardingPage />} />
+        </Routes>
+        <Toaster />
       </div>
     </>
   );
