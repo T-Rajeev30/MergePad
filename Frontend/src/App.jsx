@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import Homepage from "./Pages/Homepage.jsx";
 import LoginPage from "./Pages/LoginPage";
 import Signup from "./Pages/Signup";
@@ -13,16 +13,20 @@ import { axiosInstance } from "./lib/axios.js";
 
 function App() {
   // tanstack
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["todos"],
+  const {
+    data: authData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["authUser"],
 
     queryFn: async () => {
-      const res = await axiosInstance.get("http://localhost:5001/api/auth/me");
+      const res = await axiosInstance.get("auth/me");
       return res.data;
     },
     retry: false,
   });
-  console.log(data);
+  const authUser = authData?.user;
 
   return (
     <>
@@ -31,13 +35,34 @@ function App() {
           Click a toast
         </button>
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/notification" element={<NotificationPage />} />
-          <Route path="/call" element={<CallPage />} />
-          <Route path="/chat" element={<ChatPage />} />
-          <Route path="/onboarding" element={<OnboardingPage />} />
+          <Route
+            path="/"
+            element={authUser ? <Homepage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/signup"
+            element={!authUser ? <Signup /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/login"
+            element={!authUser ? <LoginPage /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/notification"
+            element={authUser ? <NotificationPage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/call"
+            element={authUser ? <CallPage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/chat"
+            element={authUser ? <ChatPage /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/onboarding"
+            element={authUser ? <OnboardingPage /> : <Navigate to="/login" />}
+          />
         </Routes>
         <Toaster />
       </div>
