@@ -7,8 +7,24 @@ import CallPage from "./Pages/CallPage";
 import ChatPage from "./Pages/ChatPage";
 import OnboardingPage from "./Pages/OnboardingPage.jsx";
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { axiosInstance } from "./lib/axios.js";
 
 function App() {
+  // tanstack
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["todos"],
+
+    queryFn: async () => {
+      const res = await axiosInstance.get("http://localhost:5001/api/auth/me");
+      return res.data;
+    },
+  });
+  console.log(data);
+  console.log(isLoading);
+  console.log(error);
+
   return (
     <>
       <div className=" h-screen w-full" data-theme="coffee">
