@@ -20,10 +20,9 @@ function App() {
       const res = await axiosInstance.get("http://localhost:5001/api/auth/me");
       return res.data;
     },
+    retry: false,
   });
   console.log(data);
-  console.log(isLoading);
-  console.log(error);
 
   return (
     <>
