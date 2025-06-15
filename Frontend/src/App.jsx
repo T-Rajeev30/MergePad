@@ -18,6 +18,7 @@ function App() {
     isLoading,
     error,
   } = useQuery({
+    /// it is something important
     queryKey: ["authUser"],
 
     queryFn: async () => {
@@ -31,9 +32,9 @@ function App() {
   return (
     <>
       <div className=" h-screen w-full" data-theme="coffee">
-        <button onClick={() => toast.success("Hello WOrld")}>
+        {/* <button onClick={() => toast.success("Hello WOrld")}>
           Click a toast
-        </button>
+        </button> */}
         <Routes>
           <Route
             path="/"

@@ -1,82 +1,195 @@
-import React from "react";
+import { useState } from "react";
+import { Merge } from "lucide-react";
+import { Link } from "react-router";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { signup } from "../lib/api";
 
 const Signup = () => {
-  const [form, setForm] = React.useState({
-    username: "",
+  const [signupData, setSignupData] = useState({
+    fullName: "",
     email: "",
     password: "",
   });
-  const [error, setError] = React.useState("");
+  const queryClient = useQueryClient();
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const {
+    mutate: signupMutation,
+    isPending,
+    error,
+  } = useMutation({
+    mutationFn: signup,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["authUser"] }),
+  });
 
-  const handleSubmit = (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
-    // Basic validation
-    if (!form.username || !form.email || !form.password) {
-      setError("All fields are required.");
-      return;
-    }
-    setError("");
-    // Submit logic here
-    alert("Signup successful!");
+    signupMutation(signupData);
   };
-
   return (
     <div
-      style={{
-        maxWidth: 400,
-        margin: "2rem auto",
-        padding: 24,
-        border: "1px solid #ccc",
-        borderRadius: 8,
-      }}
+      className="h-screen  flex items-center justify-center p-4 sm:p-6 md:p-8"
+      data-theme="forest"
     >
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: 12 }}>
-          <label>
-            Username:
-            <input
-              type="text"
-              name="username"
-              value={form.username}
-              onChange={handleChange}
-              style={{ width: "100%", padding: 8, marginTop: 4 }}
-            />
-          </label>
+      <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto  bg-base-100 rounded-xl shadow-lg overflow-hidden">
+        {/*Signup form - left side  */}
+        <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">
+          {/* LOGO */}
+          <div className="mb-4 flex items-center justify-start gap-2">
+            <Merge className="size-9 text-primary" />
+            <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">
+              Mergepad
+            </span>
+          </div>
+
+          {/* ERROR Message if any*/}
+          {error && (
+            <div className="alert alert-error mb-4">
+              <span>{error.response.data.message}</span>
+            </div>
+          )}
+
+          <div className="w-full">
+            <form onSubmit={handleSignup}>
+              <div className="space-y-4">
+                <div>
+                  <h2 className="text-xl font-semibold">Create an Account</h2>
+                  <p className="text-sm opacity-70">
+                    Join Mergepad: One platform. Docs. Code. Chat. Calls. News.
+                    Everything. Together.{" "}
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  {/* FULLNAME */}
+                  <div className="form-control w-full">
+                    <label className="label">
+                      <span className="label-text">Full Name</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Rajeev Tiwari"
+                      className="input input-bordered w-full"
+                      // values came from constant created from useState constant
+                      value={signupData.fullName}
+                      onChange={(e) =>
+                        setSignupData({
+                          ...signupData,
+                          fullName: e.target.value,
+                        })
+                      }
+                      required
+                    />
+                  </div>
+                  {/* EMAIL */}
+                  <div className="form-control w-full">
+                    <label className="label">
+                      <span className="label-text">Email</span>
+                    </label>
+                    <input
+                      type="email"
+                      placeholder="rajeev@gmail.com"
+                      className="input input-bordered w-full"
+                      // values came from constant created from useState constant
+                      value={signupData.email}
+                      onChange={(e) =>
+                        setSignupData({ ...signupData, email: e.target.value })
+                      }
+                      required
+                    />
+                  </div>
+                  {/* PASSWORD */}
+                  <div className="form-control w-full">
+                    <label className="label">
+                      <span className="label-text">Password</span>
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="******"
+                      className="input input-bordered w-full"
+                      value={signupData.password}
+                      onChange={(e) =>
+                        setSignupData({
+                          ...signupData,
+                          password: e.target.value,
+                        })
+                      }
+                      required
+                    />
+                    <p className="text-xs opacity-70 mt-1">
+                      Password must be at least 6 characters long
+                    </p>
+                  </div>
+
+                  <div className="form-control">
+                    <label className="label cursor-pointer justify-start gap-2">
+                      <input
+                        type="checkbox"
+                        className="checkbox checkbox-sm"
+                        required
+                      />
+                      <span className="text-xs leading-tight">
+                        I agree to the{" "}
+                        <span className="text-primary hover:underline">
+                          terms of service
+                        </span>{" "}
+                        and{" "}
+                        <span className="text-primary hover:underline">
+                          privacy policy
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                <button className="btn btn-primary w-full" type="submit">
+                  {isPending ? (
+                    <>
+                      <span className="loading loading-spinner loading-sm"></span>
+                      Loading...
+                    </>
+                  ) : (
+                    "Create Account"
+                  )}
+                </button>
+
+                <div className="text-center mt-4">
+                  <p className="text-sm">
+                    Already have an account?{" "}
+                    <Link to="/login" className="text-primary hover:underline">
+                      Sign in
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-        <div style={{ marginBottom: 12 }}>
-          <label>
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              style={{ width: "100%", padding: 8, marginTop: 4 }}
-            />
-          </label>
+
+        {/*Signup form - Right side   */}
+        <div className="hidden lg:flex w-full lg:w-1/2 bg-primary/10 items-center justify-center">
+          <div className="max-w-md p-8">
+            {/* Illustration */}
+            <div className="relative aspect-square max-w-sm mx-auto">
+              <img
+                src="/sigim.png"
+                alt="Language connection illustration"
+                className="w-full h-full"
+              />
+            </div>
+
+            <div className="text-center space-y-3 mt-6">
+              <h2 className="text-xl font-semibold">
+                Collaborate with developers worldwide
+              </h2>
+              <p className="opacity-70">
+                Pair program, share ideas, and build amazing things together on
+                Mergepad
+              </p>
+            </div>
+          </div>
         </div>
-        <div style={{ marginBottom: 12 }}>
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              style={{ width: "100%", padding: 8, marginTop: 4 }}
-            />
-          </label>
-        </div>
-        {error && <div style={{ color: "red", marginBottom: 12 }}>{error}</div>}
-        <button type="submit" style={{ padding: "8px 16px" }}>
-          Sign Up
-        </button>
-      </form>
+      </div>
     </div>
   );
 };
