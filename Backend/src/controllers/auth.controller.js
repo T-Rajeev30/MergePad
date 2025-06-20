@@ -89,7 +89,6 @@ export async function signup(req, res) {
     });
 
     /// this is the response to check wheather user is created or not
-
     res.status(201).json({ success: true, user: newUser });
   } catch (error) {
     console.log("Error in signup controller ");

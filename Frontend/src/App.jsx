@@ -6,29 +6,16 @@ import NotificationPage from "./Pages/NotificationPage";
 import CallPage from "./Pages/CallPage";
 import ChatPage from "./Pages/ChatPage";
 import OnboardingPage from "./Pages/OnboardingPage.jsx";
-import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { axiosInstance } from "./lib/axios.js";
+import { Toaster } from "react-hot-toast";
+import PageLoader from "../components/PageLoader.jsx";
+import useAuthUser from "./hooks/useAuthUser.js";
 
 function App() {
   // tanstack
-  const {
-    data: authData,
-    isLoading,
-    error,
-  } = useQuery({
-    /// it is something important
-    queryKey: ["authUser"],
 
-    queryFn: async () => {
-      const res = await axiosInstance.get("auth/me");
-      return res.data;
-    },
-    retry: false,
-  });
-  const authUser = authData?.user;
+  const { isLoading, authUser } = useAuthUser();
 
+  if (isLoading) return <PageLoader />;
   return (
     <>
       <div className=" h-screen w-full" data-theme="coffee">
