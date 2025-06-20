@@ -15,6 +15,9 @@ function App() {
 
   const { isLoading, authUser } = useAuthUser();
 
+  const isAuthenticated = Boolean(authUser);
+  const isOnboarded = authUser?.isOnboarded;
+
   if (isLoading) return <PageLoader />;
   return (
     <>
@@ -25,31 +28,43 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={authUser ? <Homepage /> : <Navigate to="/login" />}
+            element={isAuthenticated ? <Homepage /> : <Navigate to="/login" />}
           />
           <Route
             path="/signup"
-            element={!authUser ? <Signup /> : <Navigate to="/" />}
+            element={!isAuthenticated ? <Signup /> : <Navigate to="/" />}
           />
           <Route
             path="/login"
-            element={!authUser ? <LoginPage /> : <Navigate to="/" />}
+            element={!isAuthenticated ? <LoginPage /> : <Navigate to="/" />}
           />
           <Route
             path="/notification"
-            element={authUser ? <NotificationPage /> : <Navigate to="/login" />}
+            element={
+              isAuthenticated ? <NotificationPage /> : <Navigate to="/login" />
+            }
           />
           <Route
             path="/call"
-            element={authUser ? <CallPage /> : <Navigate to="/login" />}
+            element={isAuthenticated ? <CallPage /> : <Navigate to="/login" />}
           />
           <Route
             path="/chat"
-            element={authUser ? <ChatPage /> : <Navigate to="/login" />}
+            element={isAuthenticated ? <ChatPage /> : <Navigate to="/login" />}
           />
           <Route
             path="/onboarding"
-            element={authUser ? <OnboardingPage /> : <Navigate to="/login" />}
+            element={
+              isAuthenticated ? (
+                !isOnboarded ? (
+                  <OnboardingPage />
+                ) : (
+                  <Navigate to="/" />
+                )
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
           />
         </Routes>
         <Toaster />
