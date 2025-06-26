@@ -1,13 +1,13 @@
 import { Navigate, Route, Routes } from "react-router";
 import Homepage from "./Pages/Homepage.jsx";
-import LoginPage from "./Pages/LoginPage";
-import Signup from "./Pages/Signup";
-import NotificationPage from "./Pages/NotificationPage";
-import CallPage from "./Pages/CallPage";
-import ChatPage from "./Pages/ChatPage";
+import LoginPage from "./Pages/LoginPage.jsx";
+import Signup from "./Pages/Signup.jsx";
+import NotificationPage from "./Pages/NotificationPage.jsx";
+import CallPage from "./Pages/CallPage.jsx";
+import ChatPage from "./Pages/ChatPage.jsx";
 import OnboardingPage from "./Pages/OnboardingPage.jsx";
-import { Toaster } from "react-hot-toast";
 import PageLoader from "../components/PageLoader.jsx";
+import { Toaster } from "react-hot-toast";
 import useAuthUser from "./hooks/useAuthUser.js";
 
 function App() {
@@ -28,15 +28,33 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={isAuthenticated ? <Homepage /> : <Navigate to="/login" />}
+            element={
+              isAuthenticated && isOnboarded ? (
+                <Homepage />
+              ) : (
+                <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              )
+            }
           />
           <Route
             path="/signup"
-            element={!isAuthenticated ? <Signup /> : <Navigate to="/" />}
+            element={
+              !isAuthenticated ? (
+                <Signup />
+              ) : (
+                <Navigate to={isOnboarded ? "/" : "/onboarding"} />
+              )
+            }
           />
           <Route
             path="/login"
-            element={!isAuthenticated ? <LoginPage /> : <Navigate to="/" />}
+            element={
+              !isAuthenticated ? (
+                <LoginPage />
+              ) : (
+                <Navigate to={isOnboarded ? "/" : "/onboarding"} />
+              )
+            }
           />
           <Route
             path="/notification"
