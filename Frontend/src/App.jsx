@@ -9,12 +9,15 @@ import OnboardingPage from "./Pages/OnboardingPage.jsx";
 import PageLoader from "../components/PageLoader.jsx";
 import { Toaster } from "react-hot-toast";
 import useAuthUser from "./hooks/useAuthUser.js";
-import Layout from "../components/Layout.jsx";
+import { useState } from "react";
+import { useThemeStore } from "./Store/useThemeStore.js";
 
 function App() {
   // tanstack
 
   const { isLoading, authUser } = useAuthUser();
+
+  const { theme } = useThemeStore();
 
   const isAuthenticated = Boolean(authUser);
   const isOnboarded = authUser?.isOnboarded;
@@ -22,7 +25,7 @@ function App() {
   if (isLoading) return <PageLoader />;
   return (
     <>
-      <div className=" h-screen w-full" data-theme="forest">
+      <div className=" h-screen w-full" data-theme={theme}>
         {/* <button onClick={() => toast.success("Hello WOrld")}>
           Click a toast
         </button> */}
@@ -31,9 +34,7 @@ function App() {
             path="/"
             element={
               isAuthenticated && isOnboarded ? (
-                <Layout showSidebar={true}>
-                  <Homepage />
-                </Layout>
+                <Homepage />
               ) : (
                 <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
               )
