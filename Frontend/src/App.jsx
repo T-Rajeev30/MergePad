@@ -11,6 +11,7 @@ import { Toaster } from "react-hot-toast";
 import useAuthUser from "./hooks/useAuthUser.js";
 import { useState } from "react";
 import { useThemeStore } from "./Store/useThemeStore.js";
+import Layout from "../components/Layout.jsx";
 
 function App() {
   // tanstack
@@ -34,7 +35,9 @@ function App() {
             path="/"
             element={
               isAuthenticated && isOnboarded ? (
-                <Homepage />
+                <Layout showSidebar={true}>
+                  <Homepage />
+                </Layout>
               ) : (
                 <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
               )
