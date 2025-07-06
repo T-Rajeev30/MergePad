@@ -45,7 +45,7 @@ const Sidebar = () => {
           }`}
         >
           <BellIcon className="size-5 text-base-content opacity-70" />
-          <span>Friends</span>
+          <span>Notification</span>
         </Link>
       </nav>
       <div className=" p-4 border-t border-base-300 shrink-0 ">

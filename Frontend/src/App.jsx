@@ -57,16 +57,24 @@ function App() {
             path="/login"
             element={
               !isAuthenticated ? (
-                <LoginPage />
+                <LoginPage /> // 👉 Show login page if not authenticated
               ) : (
                 <Navigate to={isOnboarded ? "/" : "/onboarding"} />
+                // 👉 If authenticated, go to home or onboarding
               )
             }
           />
+
           <Route
-            path="/notification"
+            path="/notifications"
             element={
-              isAuthenticated ? <NotificationPage /> : <Navigate to="/login" />
+              isAuthenticated && isOnboarded ? (
+                <Layout showSidebar={true}>
+                  <NotificationPage />
+                </Layout>
+              ) : (
+                <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+              )
             }
           />
           <Route
