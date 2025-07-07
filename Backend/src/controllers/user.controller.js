@@ -19,6 +19,7 @@ export async function getRecommendedUsers(req, res) {
 
 export async function getMyFriends(req, res) {
   try {
+    console.log("reached here");
     const user = await User.findById(req.user._id)
       .select("friends")
       .populate(
