@@ -9,7 +9,7 @@ const Sidebar = () => {
   const currentPath = location.pathname;
 
   return (
-    <aside className="w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col h-screen sticky top-0">
+    <aside className="w-64  sidebar  top-0  bg-base-200 border-r border-base-300 hidden lg:flex flex-col">
       <div className="p-5 border-b shrink-0 border-base-300">
         <Link to="/" className="flex items-center  gap-2.5">
           <Merge className="size-9 text-primary" />
@@ -48,9 +48,11 @@ const Sidebar = () => {
           <span>Notification</span>
         </Link>
       </nav>
-      <div className=" p-4 border-t border-base-300 shrink-0 ">
+      {/*USER  Profile section  */}
+
+      <div className="p-4 border-t border-base-300 mt-auto ">
         <div className="flex gap-3 items-center ">
-          <div className="avatar ">
+          <div className="avatar">
             <div className="w-10 h-10  overflow-hidden   rounded-full ">
               <img
                 src={authUser?.profilePic}
